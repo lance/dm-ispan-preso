@@ -28,7 +28,13 @@ module BeerCatalogue
     end
 
     get '/' do
+      @beers = Beer.all(:user_id => current_user.id)
       haml :index
+    end
+
+    post '/beer' do
+      Beer.create(:name=>params[:name], :notes=>params[:notes], :rating=>params[:rating], :user=>current_user)
+      redirect '/'
     end
 
     get '/login' do

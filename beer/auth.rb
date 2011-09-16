@@ -9,7 +9,13 @@ module BeerCatalogue
     def authenticate( username, password )
       return false if username.nil? || password.nil?
       # TODO: Add auth
+      user = User.first(:name=>username)
+      user = User.create(:name=>username) if user.nil?
       session[:user] = username
+    end
+
+    def current_user
+      User.first(:name=>session[:user])
     end
 
     def logout
